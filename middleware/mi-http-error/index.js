@@ -49,8 +49,8 @@ module.exports = (option = {}) => { //option如果函数没有传入，默认是
                 //下面进行error页面的渲染
                 let errorPage  = await ctx.render(filePath,{
                     env, // 指定当前环境参数
-                    status: e.status || e.message, // 如果错误信息中没有 status，就显示为 message
-                    error: e.message, // 错误信息
+                    status: error.status || error.message, // 如果错误信息中没有 status，就显示为 message
+                    error: message, // 错误信息
                     stack // 错误的堆栈信息
                 });
                 //响应请求体

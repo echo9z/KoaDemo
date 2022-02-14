@@ -7,7 +7,7 @@ const miSend = require('./mi-send/index'); //ctx.send() 消息响应中间件
 const miLog = require('./mi-log/index'); //log4js中间件
 const ip = require('ip');
 const miHttpError = require('./mi-http-error/index'); //http-error 异常错误处理
-
+const miRule = require('./mi-rule/index');
 
 module.exports = (app) =>{
     //应用请求错误中间件
@@ -35,8 +35,22 @@ module.exports = (app) =>{
 
     app.use(bodyParser()) //ctx.request.body
     app.use(miSend()) //注册miSend中间件，通过ctx.send(jsonObj);发送json数据
-
-    //添加
+    
+    //添加mi-rule中间，将controller中的home.js加载并挂载到app属性下
+    //即app.controller.home调用home.js中函数，该中间件主要为app添加业务函数
+    miRule({
+        app,
+        rules:[
+            {
+                folder: path.join(__dirname,'../controller'),
+                name : 'controller'
+            },
+            {
+                folder: path.join(__dirname,'../service'),
+                name : 'service'
+            }
+        ]
+    });
 
     //用于捕获httpError中间件中出现的异常错误
     app.on('error',(err,ctx) => {

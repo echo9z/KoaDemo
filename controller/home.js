@@ -23,9 +23,10 @@ module.exports = {
         await next();
     },
     register : async (ctx, next)=>{ //登录数据进行效验
+        const {app} = ctx; //将ctx中app属性进行结构
         let user = ctx.request.body
         //通过调用service的register()的数据交互，返回data数据
-        let res = await HomeService.register(user.name,user.password);
+        let res = await app.service.home.register(user.name,user.password);
         let data;
         console.log(res);
         if(res.status === -1){

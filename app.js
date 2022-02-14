@@ -5,9 +5,7 @@ const middleware = require('./middleware/index'); //集中调用所有的中间�
 
 middleware(app);
 router(app); //路由规则配置 
-const appKeys = Object/* .keys(app)
-console.dir(app);
-console.log(appKeys); */
+
 app.listen(8080, () => {
     console.log('server is running at http://localhost:8080')
 })
